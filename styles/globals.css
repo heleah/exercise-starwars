@@ -6,6 +6,16 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+body{
+  height: 100vh;
+  background: url('../assets/manny-becerra-mMUo6jghVa8-unsplash.jpg');
+  background-attachment: fixed;
+}
+
+main {
+  padding: 1rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
