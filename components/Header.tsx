@@ -1,7 +1,11 @@
 import { styled } from '@stitches/react';
 
-export default function Header() {
-  return <Heading>Luke & Friends</Heading>;
+type HeaderProps = {
+  headerText: string
+}
+
+export const Header = ({ headerText }: HeaderProps) => {
+  return <Heading>{headerText}</Heading>;
 }
 
 const Heading = styled('h1', {
