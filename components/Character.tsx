@@ -1,15 +1,37 @@
-import { CharacterInt } from '../types';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { styled } from '@stitches/react';
+
+import { CharacterInt } from '../types';
 
 type CharacterProps = {
   character: CharacterInt;
 };
 
 export const Character = ({ character }: CharacterProps) => {
-  return (
-    <CharWrapper>
-      <CharName>{character.name}</CharName>
-    </CharWrapper>
+  const router = useRouter();
+  const { id } = router.query;
+
+  function convertName(name: string) {
+      return name.replace(/ |-/g,'');
+  }
+
+  //console.log('charrrr', character);
+  
+  return character && (    
+    <Link 
+      href={{
+        pathname: '/character/[id]',
+        query: { 
+          url: character.url
+        }
+      }}
+      as={`/character/${convertName(character.name)}`}
+    >
+      <CharWrapper>
+        <CharName>{character.name}</CharName>
+      </CharWrapper>
+    </Link>
   );
 };
 

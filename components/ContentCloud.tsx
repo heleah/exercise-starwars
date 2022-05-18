@@ -11,7 +11,7 @@ export const ContentCloud = ({ characters }: ContentCloudProps) => {
   return (
     <CloudWrapper>
       {characters && characters.map((character, i) =>
-        <Character key={i} character={character} />    
+        <Character key={i} character={character} />
       )}
     </CloudWrapper>
   )
