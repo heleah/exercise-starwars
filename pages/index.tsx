@@ -1,20 +1,31 @@
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import http from '../utils/http';
 import { Header } from '../components/Header';
 import { ContentCloud } from '../components/ContentCloud';
 import { SWAPIResponse } from '../types/index';
 
-function fetchSWAPI() {
-  return http<SWAPIResponse>('https://swapi.dev/api/people/?format=json');
+function fetchSWAPI(page: number) {
+  return http<SWAPIResponse>(`https://swapi.dev/api/people/?page=${page}&format=json`);
 }
 
 const Home: NextPage = () => {
-  const { data, error } = useQuery('characters', fetchSWAPI);
-  
-  if (error) { return null };
+  //const { data, error } = useQuery('characters', fetchSWAPI);
+  const queryClient = useQueryClient();
+  const [page, setPage] = useState(1);
+  const { isLoading, data, error, isFetching, isPreviousData } = useQuery(['characters', page], () => fetchSWAPI(page), { keepPreviousData: true, staleTime: 5000 });
+
+  useEffect(() => {
+    if (data?.next) {
+      queryClient.prefetchQuery(['characters', page + 1], () =>
+        fetchSWAPI(page + 1))
+    }
+  }, [data, page, queryClient])
+
+  if (isLoading || error) { return null };
 
   return (
     <>
@@ -26,6 +37,18 @@ const Home: NextPage = () => {
       <Header headerText={'Luke & Friends'} />
       <main>
         <ContentCloud characters={data?.results} />
+        <button 
+          onClick={() => setPage(current => Math.max(current - 1, 0))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setPage(current => data?.next ? current + 1 : current)}
+          disabled={isPreviousData || !data?.next}
+        >
+          Next
+        </button>
       </main>
     </>
   );

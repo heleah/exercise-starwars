@@ -24,8 +24,8 @@ const CharDetails = () => {
 
   return data && (
     <CharWrapper>
-      <BackButton>
-        <Link href='/'>Home</Link>
+      <BackButton onClick={() => router.back()}>
+        Home
       </BackButton>
       <CharName>{data.name}</CharName>
       <p>
