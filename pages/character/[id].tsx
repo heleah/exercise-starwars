@@ -27,7 +27,7 @@ const CharDetails = () => {
       <BackButton>
         <Link href='/'>Home</Link>
       </BackButton>
-      <CharName style={{color: 'white'}}>{data.name}</CharName>
+      <CharName>{data.name}</CharName>
       <p>
         <CharProp>Films:</CharProp>{' '}
         {data.films.length}
