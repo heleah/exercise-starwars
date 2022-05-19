@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { useQuery, useQueryClient } from 'react-query';
+import { styled } from '@stitches/react';
 
 import http from '../utils/http';
 import { Header } from '../components/Header';
 import { ContentCloud } from '../components/ContentCloud';
 import { SWAPIResponse } from '../types/index';
+import { NodeNextRequest } from 'next/dist/server/base-http/node';
 
 function fetchSWAPI(page: number) {
   return http<SWAPIResponse>(`https://swapi.dev/api/people/?page=${page}&format=json`);
@@ -37,21 +39,45 @@ const Home: NextPage = () => {
       <Header headerText={'Luke & Friends'} />
       <main>
         <ContentCloud characters={data?.results} />
-        <button 
-          onClick={() => setPage(current => Math.max(current - 1, 0))}
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setPage(current => data?.next ? current + 1 : current)}
-          disabled={isPreviousData || !data?.next}
-        >
-          Next
-        </button>
+        <Pagination>
+          <PagButton 
+            onClick={() => setPage(current => Math.max(current - 1, 0))}
+            disabled={page === 1}
+            >
+            Previous
+          </PagButton>
+          <PagButton
+            onClick={() => setPage(current => data?.next ? current + 1 : current)}
+            disabled={isPreviousData || !data?.next}
+            >
+            Next
+          </PagButton>
+        </Pagination>
       </main>
     </>
   );
 };
+
+const Pagination = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '1rem',
+  padding: '2rem'
+});
+
+const PagButton = styled('button', {
+  border: 'none',
+  borderRadius: '25px',
+  padding: '1rem',
+  fontSize: '16px',
+  fontWeight: 'bold',
+  cursor: 'pointer',
+
+  '&:hover': {
+    background: 'lightgrey',
+    transform: 'scale(1.05)'
+  }
+})
 
 export default Home;

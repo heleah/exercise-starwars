@@ -9,8 +9,10 @@ type CharacterProps = {
 
 export const Character = ({ character }: CharacterProps) => {
   const getId = () => {
-    const urlArr = character.url.split('/');
-    return urlArr[5];
+    /* const urlArr = character.url.split('/');
+    return urlArr[5]; */
+    const revArr = character.url.split('/').reverse();
+    return revArr[1];
   };
 
   return character && (    
@@ -34,7 +36,9 @@ const CharWrapper = styled('div', {
   color: 'whitesmoke',
 
   '&:hover': {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    transform: 'scale(1.05)',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)'
   }
 });
 

@@ -68,7 +68,8 @@ const BackButton = styled('button', {
   fontStyle: 'italic',
 
   '&:hover': {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    cursor: 'pointer'
   }
 });
 
