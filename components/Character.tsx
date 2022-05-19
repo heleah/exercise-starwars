@@ -36,7 +36,7 @@ const CharWrapper = styled('div', {
   color: 'whitesmoke',
 
   '&:hover': {
-    cursor: 'pointer',
+    cursor: 'url("https://i.ibb.co/Wn0ppfz/emojis-slackmojis-com-lightsaber-2.png"), pointer',
     transform: 'scale(1.05)',
     backgroundColor: 'rgba(255, 255, 255, 0.4)'
   }
